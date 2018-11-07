@@ -10,18 +10,20 @@ public class MaquinaExpendedoraMejorada {
     private String estacionOrigen;
     // El destino del billete
     private String estacionDestino;
-
+    // Elegir maquina para que de premio o no
+    private boolean tipoMaquina;
     /**
      * Crea una maquina expendedora de billetes de tren con el 
      * precio del billete y el origen y destino dados. Se asume que el precio
      * del billete que se recibe es mayor que 0.
      */
-    public MaquinaExpendedoraMejorada(int precioDelBillete, String origen, String destino) {
+    public MaquinaExpendedoraMejorada(int precioDelBillete, String origen, String destino, boolean premioONo) {
         precioBillete = precioDelBillete;
         balanceClienteActual = 0;
         totalDineroAcumulado = 0;
         estacionOrigen = origen;
         estacionDestino = destino;
+        tipoMaquina = premioONo;
     }
 
     /**
@@ -67,6 +69,9 @@ public class MaquinaExpendedoraMejorada {
             totalDineroAcumulado = totalDineroAcumulado + precioBillete;
             // Reduce el balance del cliente actual dejandole seguir utilizando la maquina
             balanceClienteActual = balanceClienteActual - precioBillete;
+            if (tipoMaquina == true){
+                System.out.println ("Su ticket tiene premio");
+            }
         }
         else {
             System.out.println("Necesitas introducir " + (precioBillete - balanceClienteActual) + " euros mas!");
@@ -86,17 +91,19 @@ public class MaquinaExpendedoraMejorada {
         return cantidadDeDineroADevolver;
     } 
 
-   public int vaciarDineroDeLaMaquina(){
-        int dineroRetirado;
-        if (balanceClienteActual == 0){
-        dineroRetirado = totalDineroAcumulado + balanceClienteActual;
+    public int vaciarDineroDeLaMaquina(){
+      int dineroADevolver = -1;
+       if (balanceClienteActual == 0){
+        dineroADevolver = totalDineroAcumulado;
         totalDineroAcumulado = 0;
-        balanceClienteActual = 0;
-        return dineroRetirado;
-    }
-    else{
+      }
+      else{
         System.out.println("No se puede vaciar porque hay una operación en curso.");
-        return dineroRetirado = -1;
-    }
+      }
+      return dineroADevolver;
   }
 }
+
+
+
+
